@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction - TimeForge</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="prediction-form.css">
+</head>
+<body>
+    <!-- 3D Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="logo">Time<span>Forge</span></div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="predictions.html" class="nav-btn">Back</a>
+            </div>
+        </nav>
+
+        <!-- Stock Prediction Form -->
+        <main class="form-container">
+            <h1 class="glitch" data-text="Stock Prediction">Stock Prediction</h1>
+            <form id="stockForm" class="prediction-form">
+                <div class="form-group">
+                    <label for="stockSymbol">Stock Symbol</label>
+                    <input type="text" id="stockSymbol" required placeholder="e.g., AAPL, GOOGL">
+                </div>
+                <div class="form-group">
+                    <label for="numberOfShares">Number of Shares</label>
+                    <input type="number" id="numberOfShares" required min="0" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="predictionPeriod">Prediction Period</label>
+                    <select id="predictionPeriod" required>
+                        <option value="1m">1 Month</option>
+                        <option value="3m">3 Months</option>
+                        <option value="6m">6 Months</option>
+                        <option value="1y">1 Year</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Generate Prediction</button>
+            </form>
+
+            <!-- Placeholder for Prediction Results -->
+            <div class="prediction-result"></div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="prediction.js"></script>
+    <script type="module" src="prediction-form.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictions - TimeForge</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="predictions.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="content">
+        <nav>
+            <div class="logo">Time<span>Forge</span></div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="#about" class="nav-btn">About</a>
+                <a href="#contact" class="nav-btn primary">Contact</a>
+            </div>
+        </nav>
+
+        <main class="predictions-container">
+            <h1 class="glitch" data-text="Choose Your Prediction">Choose Your Prediction</h1>
+            
+            <div class="prediction-cards">
+                <div class="prediction-card" data-type="stock">
+                    <div class="card-content">
+                        <div class="card-front">
+                            <div class="icon">📈</div>
+                            <h3>Stock Prediction</h3>
+                            <p>Advanced AI-powered stock market analysis and predictions</p>
+                        </div>
+                        <div class="card-back">
+                            <h4>Features</h4>
+                            <ul>
+                                <li>Real-time market analysis</li>
+                                <li>Trend predictions</li>
+                                <li>Risk assessment</li>
+                            </ul>
+                            <button class="predict-btn">Start Prediction</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prediction-card" data-type="real-estate">
+                    <div class="card-content">
+                        <div class="card-front">
+                            <div class="icon">🏠</div>
+                            <h3>Land Price Prediction</h3>
+                            <p>Accurate real estate and land value forecasting</p>
+                        </div>
+                        <div class="card-back">
+                            <h4>Features</h4>
+                            <ul>
+                                <li>Location-based analysis</li>
+                                <li>Market trend tracking</li>
+                                <li>Future value estimation</li>
+                            </ul>
+                            <button class="predict-btn">Start Prediction</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prediction-card" data-type="expense">
+                    <div class="card-content">
+                        <div class="card-front">
+                            <div class="icon">💰</div>
+                            <h3>Expense Prediction</h3>
+                            <p>Smart personal and business expense forecasting</p>
+                        </div>
+                        <div class="card-back">
+                            <h4>Features</h4>
+                            <ul>
+                                <li>Expense pattern analysis</li>
+                                <li>Budget optimization</li>
+                                <li>Savings recommendations</li>
+                            </ul>
+                            <button class="predict-btn">Start Prediction</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="predictions.js"></script>
+</body>
+</html>
