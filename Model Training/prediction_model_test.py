@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Load the trained model and scaler
-MODEL_PATH = r'D:\Time Forge\project\public\linear_regression_model.pkl'
-SCALER_PATH = r'D:\Time Forge\project\public\scaler.pkl'
+MODEL_PATH = r'D:\Time Forge1\Time Forge\Time Forge\project\Model Training\Models\Googl_model.pkl'
+SCALER_PATH = r'D:\Time Forge1\Time Forge\Time Forge\project\Model Training\Scalar\Googl_scaler.pkl'
 
 try:
     model = joblib.load(MODEL_PATH)
@@ -101,7 +101,7 @@ def predict_future_price(stock_symbol, historical_period="6mo", future_days=14):
 
 if __name__ == '__main__':
     # Stock symbol to predict (e.g., TCS.NS, AAPL)
-    STOCK_SYMBOL = "TCS.NS"
+    STOCK_SYMBOL = "Googl"
 
     # Historical period (e.g., "1y" for 1 year, "6mo" for 6 months, "3mo" for 3 months)
     HISTORICAL_PERIOD = "6mo"

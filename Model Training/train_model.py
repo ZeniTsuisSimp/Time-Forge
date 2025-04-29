@@ -1,52 +1,82 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense, Dropout
+from tensorflow.keras.callbacks import EarlyStopping
 import joblib
 import os
 
 # Step 1: Load raw data
-data = pd.read_csv(r"D:\Time Forge\project\Model Training\Stock Data\TCS.NS_historical_data.csv")
+data = pd.read_csv(r"F:\Time Forge\Time Forge\project\Model Training\Stock Data\Googl_historical_data.csv")
 
 # Step 2: Preprocess the data
-data['Target'] = data['Close'].shift(-1)  # Predict the next day's closing price
+data['Target'] = data['Close'].shift(-1)  # Predict next day's closing price
 data.dropna(inplace=True)
 
-X = data[['Open', 'High', 'Low', 'Close', 'Volume']]  # Input features
-y = data['Target']  # Target variable
+# Features and target
+features = ['Open', 'High', 'Low', 'Close', 'Volume']
+X = data[features].values
+y = data['Target'].values
 
-# Normalize the data
+# Normalize features
 scaler = MinMaxScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+# Define time step for sequences
+time_step = 60  # Use 60 days of history to predict next day's Close price
 
-# Step 3: Train the Linear Regression model
-model = LinearRegression()
-model.fit(X_train, y_train)
+def create_sequences(features, target, time_step):
+    X_seq, y_seq = [], []
+    for i in range(len(features) - time_step):
+        X_seq.append(features[i:i + time_step])
+        y_seq.append(target[i + time_step])
+    return np.array(X_seq), np.array(y_seq)
 
-# Step 4: Evaluate the model
-y_pred = model.predict(X_test)
+X_seq, y_seq = create_sequences(X_scaled, y, time_step)
 
-# Calculate evaluation metrics
-mse = mean_squared_error(y_test, y_pred)
-mae = mean_absolute_error(y_test, y_pred)
-rmse = np.sqrt(mse)
+# Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X_seq, y_seq, test_size=0.2, random_state=42, shuffle=False)
 
-print(f"Mean Squared Error (MSE): {mse}")
-print(f"Root Mean Squared Error (RMSE): {rmse}")
-print(f"Mean Absolute Error (MAE): {mae}")
+# Step 3: Build the LSTM model
+model = Sequential([
+    LSTM(50, return_sequences=True, input_shape=(X_train.shape[1], X_train.shape[2])),
+    Dropout(0.2),
+    LSTM(50, return_sequences=False),
+    Dropout(0.2),
+    Dense(1)  # Predicting next day closing price
+])
 
-# Step 5: Save the trained model and scaler in the current directory
-model_path = 'linear_regression_model.pkl'  # Saved in the current directory
-scaler_path = 'scaler.pkl'  # Saved in the current directory
+model.compile(optimizer='adam', loss='mse')
 
-joblib.dump(model, model_path)
+# Add early stopping to prevent overfitting
+early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+
+# Step 4: Train the model
+history = model.fit(
+    X_train, y_train,
+    epochs=100,
+    batch_size=32,
+    validation_split=0.1,
+    callbacks=[early_stop],
+    verbose=1
+)
+
+# Step 5: Evaluate the model
+train_loss = model.evaluate(X_train, y_train, verbose=0)
+test_loss = model.evaluate(X_test, y_test, verbose=0)
+
+print(f"Training Loss (MSE): {train_loss}")
+print(f"Testing Loss (MSE): {test_loss}")
+
+# Step 6: Save the trained model and scaler
+model_path = 'Googl_lstm_model.h5'  # HDF5 format for Keras models
+scaler_path = 'Googl_scaler.pkl'
+
+model.save(model_path)
 joblib.dump(scaler, scaler_path)
 
-# Print the file paths
-print(f"Model saved at: {os.path.abspath(model_path)}")
+# Print file paths
+print(f"LSTM Model saved at: {os.path.abspath(model_path)}")
 print(f"Scaler saved at: {os.path.abspath(scaler_path)}")
