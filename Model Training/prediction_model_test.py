@@ -6,7 +6,7 @@ import pandas as pd
 
 # Load the trained model and scaler
 MODEL_PATH = r'D:\Time Forge1\Time Forge\Time Forge\project\Model Training\Models\Googl_model.pkl'
-SCALER_PATH = r'D:\Time Forge1\Time Forge\Time Forge\project\Model Training\Scalar\Googl_scaler.pkl'
+SCALER_PATH = r'D:\Time Forge1\Time Forge\Time Forge\project\Model Training\Scaler\Googl_scaler.pkl'
 
 try:
     model = joblib.load(MODEL_PATH)

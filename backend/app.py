@@ -8,8 +8,8 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 # Load the trained model and scaler
-MODEL_PATH = r'F:\Time Forge\Time Forge\project\public\linear_regression_model.pkl'
-SCALER_PATH = r'F:\Time Forge\Time Forge\project\public\scaler.pkl'
+MODEL_PATH = r'D:\Time Forge1\Time Forge\Time Forge\project\public\linear_regression_model.pkl'
+SCALER_PATH = r'D:\Time Forge1\Time Forge\Time Forge\project\public\scaler.pkl'
 
 try:
     model = joblib.load(MODEL_PATH)
